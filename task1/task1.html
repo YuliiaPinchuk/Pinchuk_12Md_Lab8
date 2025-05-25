@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Password Strength Checker</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="container">
+    <h2>Create a password</h2>
+    <label for="password">Enter password</label>
+    <input type="password" id="password">
+
+    <label for="confirm">Re-enter password</label>
+    <input type="password" id="confirm">
+
+    <button onclick="checkPassword()">Check your password</button>
+
+    <div class="message" id="output"></div>
+</div>
+
+<script>
+    function checkPassword() {
+        const pass = document.getElementById("password").value;
+        const confirm = document.getElementById("confirm").value;
+        const output = document.getElementById("output");
+
+        const results = [];
+
+        if (pass === confirm) {
+            results.push('<p class="valid">You have repeated the password correctly.</p>');
+        } else {
+            results.push('<p class="invalid">Passwords do not match.</p>');
+        }
+
+        const hasUpper = /[A-Z]/.test(pass);
+        const hasLower = /[a-z]/.test(pass);
+        const hasDigit = /\d/.test(pass);
+        const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(pass);
+        const isLongEnough = pass.length >= 8;
+
+        results.push(`<p class="${hasUpper ? 'valid' : 'invalid'}">Your password contains uppercase letters.</p>`);
+        results.push(`<p class="${hasLower ? 'valid' : 'invalid'}">Your password contains lowercase letters.</p>`);
+        results.push(`<p class="${hasDigit ? 'valid' : 'invalid'}">Your password contains digits.</p>`);
+        results.push(`<p class="${hasSpecial ? 'valid' : 'invalid'}">Your password contains special characters.</p>`);
+        results.push(`<p class="${isLongEnough ? 'valid' : 'invalid'}">Your password contains 8 or more characters.</p>`);
+
+        output.innerHTML = results.join('');
+    }
+</script>
+</body>
+</html>
